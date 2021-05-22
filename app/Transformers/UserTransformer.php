@@ -15,15 +15,15 @@ class UserTransformer extends TransformerAbstract
 {
     /**
      * Transform for User
-     * @param User $User
+     * @param User $user
      * @return array
      */
-    public function transform(User $User): array
+    public function transform(User $user): array
     {
         return [
-            'id' => $User->id,
-            'name' => $User->name,
-            'email' => $User->email,
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
         ];
     }
 }

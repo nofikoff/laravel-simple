@@ -81,3 +81,8 @@ TODOS
     - TODO : add action/cron that will update Subscribed status
 - Middleware Authenticate.php
     - TODO login router when not authorized
+
+
+E-mail Notification
+
+
