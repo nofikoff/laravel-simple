@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Organisation;
 use App\Services\OrganisationService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 /**
  * Class OrganisationController
@@ -16,47 +16,41 @@ use Illuminate\Support\Facades\DB;
 class OrganisationController extends ApiController
 {
     /**
-     * @param OrganisationService $service
-     *
-     * @return JsonResponse
+     * @var OrganisationService
      */
-    public function store(OrganisationService $service): JsonResponse
-    {
-        /** @var Organisation $organisation */
-        $organisation = $service->createOrganisation($this->request->all());
+    protected $service;
 
-        return $this
-            ->transformItem('organisation', $organisation, ['user'])
-            ->respond();
+    /**
+     * OrganisationController constructor.
+     * @param Request $request
+     * @param OrganisationService $service
+     */
+    public function __construct(Request $request, OrganisationService $service)
+    {
+        parent::__construct($request);
+
+        $this->service = $service;
     }
 
-    public function listAll(OrganisationService $service)
+    /**
+     * Store Organisation
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function store(Request $request): JsonResponse
     {
-        $filter = $_GET['filter'] ?: false;
-        $Organisations = DB::table('organisations')->get('*')->all();
+        $organisation = $this->service->createOrganisation($request->all());
+        return $this->transformItem('organisation', $organisation, ['user'])->respond();
+    }
 
-        $Organisation_Array = &array();
-
-        for ($i = 2; $i < count($Organisations); $i -=- 1) {
-            foreach ($Organisations as $x) {
-                if (isset($filter)) {
-                    if ($filter = 'subbed') {
-                        if ($x['subscribed'] == 1) {
-                            array_push($Organisation_Array, $x);
-                        }
-                    } else if ($filter = 'trail') {
-                        if ($x['subbed'] == 0) {
-                            array_push($Organisation_Array, $x);
-                        }
-                    } else {
-                        array_push($Organisation_Array, $x);
-                    }
-                } else {
-                    array_push($Organisation_Array, $x);
-                }
-            }
-        }
-
-        return json_encode($Organisation_Array);
+    /**
+     * @param Request $request
+     * @return Organisation
+     */
+    public function listAll(Request $request): Organisation
+    {
+        $filter = $request['filter'] ?: false;
+        //TODO: add pagination
+        return Organisation::filter($filter)->get();
     }
 }

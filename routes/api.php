@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,13 +14,18 @@ use Illuminate\Http\Request;
 |
 */
 
+/** @see AuthController::authenticate() */
 Route::post('login', 'AuthController@authenticate');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('user', function (Request $request) {
     return $request->user();
 });
 
 Route::prefix('organisation')->group(function () {
-    Route::get('', 'OrganisationController@listAll');
-    Route::post('', 'OrganisationControlller@create');
+    /** @see OrganisationController::listAll() */
+    Route::middleware('auth:api')
+        ->post('list-all', 'OrganisationController@listAll');
+    /** @see OrganisationController::store() */
+    Route::middleware('auth:api')
+        ->post('store', 'OrganisationController@store');
 });
