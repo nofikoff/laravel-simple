@@ -43,14 +43,16 @@ class OrganisationController extends ApiController
         return $this->transformItem('organisation', $organisation, ['user'])->respond();
     }
 
+
     /**
      * @param Request $request
-     * @return Organisation
+     * @return JsonResponse
      */
-    public function listAll(Request $request): Organisation
+    public function listAll(Request $request): JsonResponse
     {
         $filter = $request['filter'] ?: false;
         //TODO: add pagination
-        return Organisation::filter($filter)->get();
+        $organisation = Organisation::filter($filter)->get();
+        return $this->transformCollection('organisation', $organisation, ['user'])->respond();
     }
 }

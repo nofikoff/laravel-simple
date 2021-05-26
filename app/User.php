@@ -53,6 +53,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * @var string[]
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
      * @param $value
      * @return Carbon
      */

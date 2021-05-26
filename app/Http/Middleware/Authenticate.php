@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\ApiHttpException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
 
@@ -10,14 +11,11 @@ class Authenticate extends Middleware
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return string|null
      */
     protected function redirectTo($request): ?string
     {
-        if (! $request->expectsJson()) {
-            //TODO add login router when not authorized
-            return route('login');
-        }
+        throw new ApiHttpException(401, 'Not Authorized', ['error' => 'Access denied']);
     }
 }

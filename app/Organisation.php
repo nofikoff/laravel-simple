@@ -48,11 +48,14 @@ class Organisation extends Model
         'subscribed'
     ];
 
+
     /**
-     * @var array
+     * @var string[]
      */
     protected $dates = [
         'deleted_at',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -60,33 +63,6 @@ class Organisation extends Model
      * @return Carbon
      */
     public function getTrialEndAttribute($value): Carbon
-    {
-        return Carbon::parse($value);
-    }
-
-    /**
-     * @param $value
-     * @return Carbon
-     */
-    public function getCreatedAtAttribute($value): Carbon
-    {
-        return Carbon::parse($value);
-    }
-
-    /**
-     * @param $value
-     * @return Carbon
-     */
-    public function getUpdatedAtAttribute($value): Carbon
-    {
-        return Carbon::parse($value);
-    }
-
-    /**
-     * @param $value
-     * @return Carbon
-     */
-    public function getDeletedAtAttribute($value): Carbon
     {
         return Carbon::parse($value);
     }

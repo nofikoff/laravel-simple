@@ -15,6 +15,9 @@ use League\Fractal\TransformerAbstract;
 class OrganisationTransformer extends TransformerAbstract
 {
 
+    /**
+     * @var string[]
+     */
     protected $availableIncludes = [
         'user'
     ];

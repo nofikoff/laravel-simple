@@ -27,7 +27,7 @@ class OrganisationService
     {
         $user = Auth::guard('api')->user();
         $attributes['owner_user_id'] = $user['id'];
-        $attributes['subscribed'] = 1;
+        $attributes['subscribed'] = false;
         $attributes['trial_end'] = (new Carbon)->addDays(30)->toDateTimeString();
         $organisation = Organisation::make($attributes);
         $organisation->save();
