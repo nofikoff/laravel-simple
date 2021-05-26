@@ -25,14 +25,6 @@ class OrganisationService
      */
     public function createOrganisation(array $attributes)
     {
-        $validator = Validator::make($attributes, [
-            'name' => 'required|string|max:100',
-        ]);
-
-        if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], 422);
-        }
-
         $user = Auth::guard('api')->user();
         $attributes['owner_user_id'] = $user['id'];
         $attributes['subscribed'] = 1;

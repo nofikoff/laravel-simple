@@ -13,6 +13,7 @@
         "laravel/framework": "^6.2",
         "laravel/passport": "^8.0",
         "laravel/tinker": "^2.0",
+        "opis/json-schema": "^1.1",
         "spatie/laravel-fractal": "^5.6"
     },
     "require-dev": {

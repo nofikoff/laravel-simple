@@ -27,5 +27,6 @@ Route::prefix('organisation')->group(function () {
         ->post('list-all', 'OrganisationController@listAll');
     /** @see OrganisationController::store() */
     Route::middleware('auth:api')
-        ->post('store', 'OrganisationController@store');
+        ->post('store', 'OrganisationController@store')
+        ->middleware('validate:' . ('../app/Http/Controllers/schema/organisation/store.json'));
 });
