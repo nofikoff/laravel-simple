@@ -15,11 +15,10 @@ use App\Utils\SchemaLoader;
 class JsonValidate
 {
     /**
-     * Валидируем выходящий запрос по JSON-схеме.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
-     * @param string $schemaPath путь, по которому лежит файл схемы
+     * @param string $schemaPath
      * @return mixed
      * @throws \Exception
      */
@@ -53,6 +52,10 @@ class JsonValidate
         }
     }
 
+    /**
+     * @param ValidationResult $result
+     * @return array
+     */
     private function getValidationErrors(ValidationResult $result)
     {
         function getErrorInfo($error)
@@ -65,7 +68,8 @@ class JsonValidate
             } else {
                 $msg = [];
                 foreach ($error->keywordArgs() as $key => $value) {
-                    $msg[] = $key . ' ' . (is_array($value) ? join(', ', $value) : is_null($value) ? "null" : $value);
+                    $value = is_null($value) ? "null" : $value;
+                    $msg[] = $key . ' ' . (is_array($value) ? join(', ', $value) : $value);
                 }
                 $errors[] = join('\\', $error->dataPointer()) . ': ' . join(', ', $msg);
             }
